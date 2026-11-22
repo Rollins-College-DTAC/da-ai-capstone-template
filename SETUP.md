@@ -31,7 +31,7 @@ You already have a repo. We clone it, then pull the class template into it.
 3. Paste this one command and press Enter:
 
    ```
-   git pull --no-rebase TEMPLATE_URL main --allow-unrelated-histories --no-edit
+   git pull --no-rebase https://github.com/Rollins-College-DTAC/da-ai-capstone-template main --allow-unrelated-histories --no-edit
    ```
 
    - **Empty repo:** done. You now have every template file.
