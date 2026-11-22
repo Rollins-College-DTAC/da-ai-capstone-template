@@ -19,15 +19,33 @@ Using your GitHub login for both means one password instead of three.
    - Create a token → copy it. Turso shows it only once, so paste it into your `.env` right away (step 4).
 2. **Streamlit Community Cloud:** go to share.streamlit.io → Continue with GitHub → allow access to your repositories.
 
-## 3. Your project repo (15 min)
+## 3. Your project repo (20 min)
 
-1. Open the class template on GitHub → green **Use this template** button → **Create a new repository**.
-2. Name it after your project. Set it to **Public**, since this is your portfolio piece.
-3. On the new repo page: **Code** → **Open with GitHub Desktop** → Clone.
+You already have a repo. We clone it, then pull the class template into it.
+
+1. On your repo's GitHub page: **Code** → **Open with GitHub Desktop** → Clone.
    - Mac: it lands in `~/Documents/GitHub/<your-repo>`.
    - Windows: it lands in `Documents\GitHub\<your-repo>`.
-4. On GitHub, open your repo → Settings → Collaborators → add your instructor.
-5. Settings → Code security → turn on **Secret scanning** and **Push protection**. GitHub then blocks a push that contains a key.
+2. In GitHub Desktop: **Repository** → **Open in Terminal** (Mac) or **Open in Command Prompt** (Windows).
+   - Windows: if it says Git is not installed, install Git for Windows from git-scm.com (all defaults), then try again.
+3. Paste this one command and press Enter:
+
+   ```
+   git pull --no-rebase TEMPLATE_URL main --allow-unrelated-histories --no-edit
+   ```
+
+   - **Empty repo:** done. You now have every template file.
+   - **Repo with files:** if it says `CONFLICT` in `README.md`, and your README held only your repo name (GitHub adds one when you tick "Add a README"), keep the template's README with:
+
+     ```
+     git checkout --theirs README.md && git add README.md && git commit --no-edit
+     ```
+
+   - Any other `CONFLICT`: stop and raise your hand. Don't guess at a conflict.
+4. Back in GitHub Desktop: **Push origin**.
+5. Make sure the repo is **Public** (Settings → General → Danger Zone → Change visibility), since this is your portfolio piece.
+6. Settings → Collaborators → add your instructor.
+7. Settings → Code security → turn on **Secret scanning** and **Push protection**. GitHub then blocks a push that contains a key.
 
 ## 4. Your .env file (15 min)
 
