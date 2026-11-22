@@ -21,6 +21,8 @@ Using your GitHub login for both means one password instead of three.
 
 ## 3. Your project repo (20 min)
 
+> **Already built most of your project?** If your repo already has `CLAUDE.md` and `pyproject.toml`, skip the `git pull` command below. The template would clash with your own files. Just copy `SETUP.md` and `scripts/check_setup.py` from the template into your repo.
+
 You already have a repo. We clone it, then pull the class template into it.
 
 1. On your repo's GitHub page: **Code** → **Open with GitHub Desktop** → Clone.
