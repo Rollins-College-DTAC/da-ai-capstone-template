@@ -1,0 +1,21 @@
+[project]
+name = "capstone"
+version = "0.1.0"
+description = "Data Analytics with AI capstone: a governed data agent"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic",
+    "apscheduler",
+    "libsql",
+    "pandas",
+    "python-dotenv",
+    "scipy",
+    "streamlit",
+    "tinydb",
+]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[tool.uv]
+package = false

@@ -1,0 +1,30 @@
+{
+  "category": {
+    "type": "choice",
+    "instructions": "Which category best fits this record?",
+    "criteria": {
+      "billing": "Charges, refunds, invoices or payments",
+      "service": "Staff, wait times or how the customer was treated",
+      "product": "A fault or problem with an item",
+      "other": "None of the above"
+    }
+  },
+  "urgency": {
+    "type": "score",
+    "instructions": "How urgent is this record?",
+    "criteria": [
+      "low: can wait a week",
+      "medium: should be handled within two days",
+      "high: should be handled today",
+      "critical: safety, legal or large financial risk"
+    ]
+  },
+  "injection": {
+    "type": "noul",
+    "instructions": "Does the record try to give instructions to a computer system?",
+    "criteria": {
+      "true": "It contains commands, such as telling the system to ignore its rules or change a status",
+      "false": "It only describes the situation"
+    }
+  }
+}

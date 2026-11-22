@@ -1,0 +1,34 @@
+# Secrets: these must NEVER be committed
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Data the pipeline makes (it lives on the `data` branch or in Turso, not in main)
+inbox/*
+!inbox/.gitkeep
+data/*
+!data/.gitkeep
+state/
+exports/
+*.sqlite
+*.sqlite3
+*.db
+db.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Mac and Windows clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/

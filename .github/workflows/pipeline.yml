@@ -1,0 +1,57 @@
+# Runs the agent once a minute inside one job, then commits state to the `data` branch.
+# Start it from GitHub: Actions tab -> pipeline -> Run workflow.
+name: pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "How many minutes to run (one import per minute)"
+        required: true
+        default: "30"
+  # Optional: one short run each hour between demos.
+  # schedule:
+  #   - cron: "0 * * * *"
+
+permissions:
+  contents: write   # lets the job push to the data branch with GITHUB_TOKEN
+
+concurrency:
+  group: pipeline
+  cancel-in-progress: false   # never let two runs write the data branch at once
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45   # keep above the longest demo run
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      JEV_API_KEY: ${{ secrets.JEV_API_KEY }}
+      TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+      TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+      MINUTES: ${{ inputs.minutes || '1' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure git for commits
+        run: |
+          git config --global user.name "pipeline-bot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check out the data branch into state/
+        run: |
+          if git fetch origin data:data 2>/dev/null; then
+            git worktree add state data
+          else
+            git worktree add --orphan -b data state
+          fi
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run the agent
+        # cloud_loop: each minute generate an import, run the pipeline,
+        # export the summary, then amend-commit and force-push state/ to `data`.
+        run: uv run python -m agent.cloud_loop --minutes "$MINUTES" --state state/

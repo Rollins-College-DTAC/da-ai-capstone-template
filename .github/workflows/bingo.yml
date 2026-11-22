@@ -1,0 +1,30 @@
+# Checks the Portfolio BINGO card in README.md on every push.
+# It shows a warning (not a red X) until Dec 6, so early pushes don't look broken.
+# After Dec 6, delete the `continue-on-error` line to make it a hard check.
+name: bingo
+
+on:
+  push:
+    paths: ["README.md"]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check the BINGO card
+        run: |
+          python scripts/check_bingo.py README.md | tee bingo.txt
+          exit ${PIPESTATUS[0]}
+      - name: Show the result on the run page
+        if: always()
+        run: |
+          echo '## Portfolio BINGO' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat bingo.txt >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
